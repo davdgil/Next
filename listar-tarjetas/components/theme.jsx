@@ -1,13 +1,12 @@
+// components/theme.jsx
+import React from 'react';
 
-function Theme() {
+const Theme = ({ children }) => {
+  return (
+    <div className="min-h-screen bg-slate-700">
+      {children}
+    </div>
+  );
+};
 
-    return(
-
-       <body className="min-h-screen bg-slate-700">
-       <div className="box-border p-4 border-4">sdads</div>
-      </body>
-
-    )
-}
-
-export default Theme
+export default Theme;

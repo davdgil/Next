@@ -1,18 +1,13 @@
-import Theme from "@/components/theme";
+// pages/index.js
+import React from 'react';
+import Theme from '@/components/theme';
 
 export default function Home() {
-
-  async function fetchUsers() {
-    const res = await fetch('https://reqres.in/api/users');
-    const data = await res.json();
-    return data;
-  }
-
-
-
   return (
     <Theme>
-      
+      <div className='border 4px p-4 '>
+        <h1>HOME PAGE</h1>
+      </div>
     </Theme>
   );
 }
