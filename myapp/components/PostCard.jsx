@@ -3,8 +3,6 @@
 //posterior
 import Link from 'next/link'
 
-
-
 /* React Client Component (after Link) */
 async function PostCard({ post }) {
 

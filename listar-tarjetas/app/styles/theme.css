@@ -1,0 +1,5 @@
+/* styles/theme.css */
+:global(body) {
+    color: rgb(7, 6, 6);
+  }
+  

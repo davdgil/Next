@@ -3,3 +3,16 @@
 @tailwind utilities;
 
 
+
+/* Estilos para el modo oscuro */
+body.dark-mode {
+    background-color: #1a202c;
+    color: #464242;
+  }
+  
+  body.dark-mode a {
+    color: #63b3ed;
+  }
+
+
+

@@ -1,4 +1,4 @@
-
+import Theme from "@/components/theme";
 
 export default function Home() {
 
@@ -11,9 +11,8 @@ export default function Home() {
 
 
   return (
-    <div>
-      <p>HomePage</p>
-     
-    </div>
+    <Theme>
+      
+    </Theme>
   );
 }
