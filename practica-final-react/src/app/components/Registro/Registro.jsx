@@ -3,8 +3,8 @@ import { useState } from 'react';
 
 const Registro = () => {
   const [userType, setUserType] = useState(null);
-  const [e-mail, setE-mail] = useState(null);
-  
+  const [email, setEmail] = useState(null);
+  const [pass, setPass] = useState(null);
 
 
   const handleOptionChange = (event) => {
@@ -40,7 +40,7 @@ const Registro = () => {
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="text"
+            type="text" value = {email} onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="mb-6">
@@ -49,7 +49,7 @@ const Registro = () => {
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="password"
+            type="password" value={pass} onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         {/*------------------------checkBoxes-------------------------------*/}
