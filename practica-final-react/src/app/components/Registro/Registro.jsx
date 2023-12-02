@@ -1,10 +1,12 @@
 "use client";
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const Registro = () => {
   const [userType, setUserType] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [pass, setPass] = useState(null);
+  const [email, setEmail] = useState('');
+  const [pass, setPass] = useState('');
+  const router = useRouter();
 
 
   const handleOptionChange = (event) => {
@@ -13,11 +15,11 @@ const Registro = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Aquí puedes realizar acciones adicionales antes de llamar a handleForm si es necesario
-    handleForm(userType, "ds", "sda");
+   
+    handleForm();
   };
 
-  const handleForm = (userType, email, pass) => {
+  const handleForm = () => {
     if (userType == null) {
       alert("NO HAS ELEGIDO UN USUARIO");
     } else {
@@ -25,6 +27,16 @@ const Registro = () => {
       console.log("Tipo de usuario:", userType);
       console.log("Correo electrónico:", email);
       console.log("Contraseña:", pass);
+      setEmail('')
+      setPass('')
+
+      switch(userType){
+        case 'admin':
+          router.push('/admin'); // Ajusta la ruta según la estructura real de tu proyecto
+
+          break;
+      }
+
     }
   };
 
@@ -49,7 +61,7 @@ const Registro = () => {
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="password" value={pass} onChange={(e) => setEmail(e.target.value)}
+            type="password" value= {pass} onChange={(e) => setPass(e.target.value)}
           />
         </div>
         {/*------------------------checkBoxes-------------------------------*/}
