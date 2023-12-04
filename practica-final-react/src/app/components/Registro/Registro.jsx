@@ -22,7 +22,6 @@ const Registro = () => {
   };
 
   const handleForm = () => {
-   
 
     if (userType == null) {
       setShowPopup(true);

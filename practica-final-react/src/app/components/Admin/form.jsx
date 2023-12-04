@@ -1,7 +1,10 @@
 "use client";
 import { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid';
 import './form.css'
 import Popup from '../Popup';
+
+import POST from '@/app/api/admin/route';
 
 function Form(){
 
@@ -11,30 +14,50 @@ function Form(){
     const [cif, setCif] = useState('')
     const [addres, setAddres] = useState('')
     const [showPopup, setShowPopup] = useState(false);
+    const [message, setMessage] = useState('')
 
-    const handleSubmit = () =>{
-       
+    const handleSubmit = async (commerce) => {
         
-    }
+        try {
+            const response = await POST({ commerce }); 
+            
+            setMessage("Comercio agregado con éxito");
+            setShowPopup(true);
+            
+        } catch (error) {
+            
+            console.error('Error en la función POST:', error);
+            setMessage("Error al registrar un nuevo comercio");
+            setShowPopup(true);
+        }
+    };
+    
   
     const checkFields = (e) =>{
+
         e.preventDefault();
 
         const formValues = [commerceName, email, phone, cif, addres]
 
           if (formValues.some(value => !value.trim())) {
-            
+            setMessage("Es obligatorio completar todos los campos");
             setShowPopup(true);
         
         } else {
-            console.log({
-                commerceName,
-                email,
-                phone,
-                cif,
-                addres,
-              });
             setShowPopup(false);
+
+            const newCommerce = {
+                id: uuidv4(),
+                commerceName: commerceName,
+                email:email,
+                phone:phone,
+                cif: cif,
+                addres:addres,
+            }
+
+            console.log(newCommerce)
+
+            handleSubmit(newCommerce);
             
         }
 
@@ -48,7 +71,7 @@ function Form(){
                 <p className="text-lg text-red-300 mt-2">Completa el formulario para registrar un nuevo comercio.</p>
             </div>
 
-            {showPopup && <Popup message="Es obligatorio completar todos los campos" onClose={() => setShowPopup(false)} />}
+            {showPopup && <Popup message = {message} onClose={() => setShowPopup(false)} />}
 
             <form className="w-full max-w-lg rounded mt-8 adminForm " onSubmit={checkFields}>
                 <div className="flex flex-wrap -mx-3 mb-6">
