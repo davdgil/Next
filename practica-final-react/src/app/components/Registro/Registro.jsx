@@ -1,11 +1,13 @@
 "use client";
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Popup from '../Popup';
 
 const Registro = () => {
   const [userType, setUserType] = useState(null);
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
+  const [showPopup, setShowPopup] = useState(false);
   const router = useRouter();
 
 
@@ -20,10 +22,12 @@ const Registro = () => {
   };
 
   const handleForm = () => {
+   
+
     if (userType == null) {
-      alert("NO HAS ELEGIDO UN USUARIO");
+      setShowPopup(true);
     } else {
-      // Aquí puedes realizar acciones adicionales con los valores del formulario, como enviar una solicitud HTTP, etc.
+      setShowPopup(false);
       console.log("Tipo de usuario:", userType);
       console.log("Correo electrónico:", email);
       console.log("Contraseña:", pass);
@@ -42,6 +46,7 @@ const Registro = () => {
 
   return (
     <div className="flex items-center justify-center mt-4">
+       {showPopup && <Popup message="Selecciona un usuario" onClose={() => setShowPopup(false)} />}
       <form
         className="bg-slate-800 p-7 rounded-md shadow-md max-w-none mx-auto border border-gray-300"
         onSubmit={handleSubmit}
@@ -119,6 +124,14 @@ const Registro = () => {
           </button>
         </div>
       </form>
+
+
+      {/***/}
+
+      
+
+
+
     </div>
   );
 };

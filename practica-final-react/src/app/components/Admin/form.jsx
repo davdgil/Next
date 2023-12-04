@@ -1,7 +1,7 @@
 "use client";
 import { useState } from 'react'
-import ErrorMessage from '../ErrorMessage';
 import './form.css'
+import Popup from '../Popup';
 
 function Form(){
 
@@ -10,14 +10,13 @@ function Form(){
     const [phone, setPhone] = useState('')
     const [cif, setCif] = useState('')
     const [addres, setAddres] = useState('')
-    const [showError, setShowError] = useState(false);
-    
+    const [showPopup, setShowPopup] = useState(false);
 
     const handleSubmit = () =>{
        
         
     }
-
+  
     const checkFields = (e) =>{
         e.preventDefault();
 
@@ -25,7 +24,7 @@ function Form(){
 
           if (formValues.some(value => !value.trim())) {
             
-            setShowError(true);
+            setShowPopup(true);
         
         } else {
             console.log({
@@ -35,7 +34,7 @@ function Form(){
                 cif,
                 addres,
               });
-            setShowError(false);
+            setShowPopup(false);
             
         }
 
@@ -49,7 +48,7 @@ function Form(){
                 <p className="text-lg text-red-300 mt-2">Completa el formulario para registrar un nuevo comercio.</p>
             </div>
 
-            {showError && <ErrorMessage onClose={() => setShowError(false)} />}
+            {showPopup && <Popup message="Es obligatorio completar todos los campos" onClose={() => setShowPopup(false)} />}
 
             <form className="w-full max-w-lg rounded mt-8 adminForm " onSubmit={checkFields}>
                 <div className="flex flex-wrap -mx-3 mb-6">
@@ -117,6 +116,7 @@ function Form(){
                     </div>
                 
             </form>
+            
         </div>
 
     )
