@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 import './form.css'
 import Popup from '../Popup';
 
-import POST from '@/app/api/admin/route';
 
 function Form(){
 
@@ -16,24 +15,37 @@ function Form(){
     const [showPopup, setShowPopup] = useState(false);
     const [message, setMessage] = useState('')
 
-    const handleSubmit = async (commerce) => {
-        
+    async function handleSubmit (commerce) {
         try {
-            const response = await POST({ commerce }); 
-            
-            setMessage("Comercio agregado con éxito");
-            setShowPopup(true);
-            
+            const response = await fetch('/api/admin', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(commerce),
+            });
+    
+            if (response.ok) {
+                // La solicitud fue exitosa (código de estado 2xx)
+                setMessage("Comercio agregado con éxito");
+                setShowPopup(true);
+            } else {
+                // La solicitud fue exitosa pero la respuesta tiene un código de estado no exitoso
+                console.error('Respuesta no exitosa:', response.status);
+                setMessage("Error al registrar un nuevo comercio");
+                setShowPopup(true);
+            }
         } catch (error) {
-            
+            // Hubo un error en la conexión o la solicitud
             console.error('Error en la función POST:', error);
             setMessage("Error al registrar un nuevo comercio");
             setShowPopup(true);
         }
     };
     
+    
   
-    const checkFields = (e) =>{
+    const checkFields = async (e) =>{
 
         e.preventDefault();
 
@@ -57,7 +69,8 @@ function Form(){
 
             console.log(newCommerce)
 
-            handleSubmit(newCommerce);
+            const respuesta = await handleSubmit(newCommerce);
+            console.log(respuesta)
             
         }
 

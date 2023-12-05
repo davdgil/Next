@@ -3,10 +3,10 @@ import { NextResponse } from 'next/server';
 import { readFileSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 
-export default async function POST(request) {
+export async function POST(request) {
   const data = await request.json();
   const filePath = resolve('data', 'commerce.txt');
-
+  console.log(data)
   try {
     // Read commerce.txt from disk and concatenate with data from request
     const commerceData = JSON.parse(readFileSync(filePath, 'utf-8'));
