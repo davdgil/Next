@@ -5,16 +5,18 @@ import { resolve } from 'path';
 
 export async function POST(request) {
   const data = await request.json();
-  const filePath = resolve('data', 'commerce.txt');
-  console.log(data)
+  const filePath = resolve(process.cwd(), 'data', 'commerce.txt');
+  console.log(data);
+
   try {
-    // Read commerce.txt from disk and concatenate with data from request
+    // Leer commerce.txt del disco y concatenar con los datos de la solicitud
     const commerceData = JSON.parse(readFileSync(filePath, 'utf-8'));
     writeFileSync(filePath, JSON.stringify([...commerceData, data]));
   } catch (e) {
-    // If commerce.txt file does not exist, create it with data from request
-    writeFileSync(filePath, JSON.stringify([data]));
+    console.error('Error en la función POST:', e);
+    return NextResponse.json({ error: 'Error interno del servidor' }, { status: 500 });
   }
 
   return NextResponse.json({ message: 'Guardando datos...' });
 }
+

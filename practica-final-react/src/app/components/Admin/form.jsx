@@ -15,8 +15,9 @@ function Form(){
     const [showPopup, setShowPopup] = useState(false);
     const [message, setMessage] = useState('')
 
-    async function handleSubmit (commerce) {
+    async function handleSubmit(commerce) {
         try {
+            console.log('Antes de la solicitud POST');
             const response = await fetch('/api/admin', {
                 method: 'POST',
                 headers: {
@@ -24,24 +25,32 @@ function Form(){
                 },
                 body: JSON.stringify(commerce),
             });
+            console.log('Después de la solicitud POST');
     
-            if (response.ok) {
-                // La solicitud fue exitosa (código de estado 2xx)
-                setMessage("Comercio agregado con éxito");
-                setShowPopup(true);
-            } else {
-                // La solicitud fue exitosa pero la respuesta tiene un código de estado no exitoso
-                console.error('Respuesta no exitosa:', response.status);
-                setMessage("Error al registrar un nuevo comercio");
-                setShowPopup(true);
+            if (!response.ok) {
+                setMessage("Error al añadir un nuevo comercio")
+                setShowPopup(true)
+                console.error('Error en la función POST. Código de estado:', response.status);
+                return { success: false, message: 'Error al registrar un nuevo comercio' };
+            }else{
+                setMessage("Comercio añadido con exito")
+                setShowPopup(true)
+                setcommerceName('')
+                setEmail('')
+                setPhone('')
+                setCif('')
+                setAddres('')
             }
+    
         } catch (error) {
-            // Hubo un error en la conexión o la solicitud
             console.error('Error en la función POST:', error);
-            setMessage("Error al registrar un nuevo comercio");
-            setShowPopup(true);
+            return { success: false, message: 'Error al registrar un nuevo comercio' };
         }
-    };
+    }
+    
+    
+    
+    
     
     
   
@@ -70,7 +79,7 @@ function Form(){
             console.log(newCommerce)
 
             const respuesta = await handleSubmit(newCommerce);
-            console.log(respuesta)
+            console.log(respuesta.message);
             
         }
 
