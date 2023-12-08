@@ -22,3 +22,13 @@ export async function POST(request) {
     return NextResponse.json({ message: 'Guardando datos...' });
   }
 }
+
+export async function GET() {
+  try{
+      const commerce = JSON.parse(readFileSync("data/commerce.txt"))
+      //console.log(users)
+      return NextResponse.json({commerce})
+  } catch(e){  
+      return NextResponse.json({message: "Comercio no existente...", status: 400})
+  }
+}

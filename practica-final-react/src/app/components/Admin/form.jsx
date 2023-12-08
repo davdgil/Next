@@ -18,7 +18,7 @@ function Form() {
 
         console.log("ASIGNANDO ID ", newCommerce);
         try {
-            const response = await fetch('/api/admin', {
+            const response = await fetch('/api/commerce', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
