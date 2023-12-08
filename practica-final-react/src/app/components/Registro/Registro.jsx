@@ -17,7 +17,7 @@ const Registro = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-   
+
     handleForm();
   };
 
@@ -33,7 +33,7 @@ const Registro = () => {
       setEmail('')
       setPass('')
 
-      switch(userType){
+      switch (userType) {
         case 'admin':
           router.push('/admin'); // Ajusta la ruta según la estructura real de tu proyecto
 
@@ -44,8 +44,8 @@ const Registro = () => {
   };
 
   return (
-    <div className="flex items-center justify-center mt-4">
-       {showPopup && <Popup message="Selecciona un usuario" onClose={() => setShowPopup(false)} />}
+    <div className="flex items-center justify-center mt-5">
+      {showPopup && <Popup message="Selecciona un usuario" onClose={() => setShowPopup(false)} />}
       <form
         className="bg-slate-800 p-7 rounded-md shadow-md max-w-none mx-auto border border-gray-300"
         onSubmit={handleSubmit}
@@ -56,7 +56,7 @@ const Registro = () => {
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="text" value = {email} onChange={(e) => setEmail(e.target.value)}
+            type="text" value={email} onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="mb-6">
@@ -65,7 +65,7 @@ const Registro = () => {
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="password" value= {pass} onChange={(e) => setPass(e.target.value)}
+            type="password" value={pass} onChange={(e) => setPass(e.target.value)}
           />
         </div>
         {/*------------------------checkBoxes-------------------------------*/}
@@ -125,9 +125,7 @@ const Registro = () => {
       </form>
 
 
-      {/***/}
 
-      
 
 
 

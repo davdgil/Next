@@ -4,7 +4,7 @@ import Imagen from "./components/Logo/Logo"
 export default function Home() {
 
   return (
-      <div className='Sign-up'>ç
+      <div className='Sign-up'>
         <Imagen />
         <Registro />
       </div>

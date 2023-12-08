@@ -4,45 +4,47 @@ import './form.css'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast';
 
+async function onSubmit(commerce, reset) {
+    console.log(commerce);
+
+    const newCommerce = {
+        id: uuidv4(),
+        ...commerce,
+    }
+
+    console.log("ASIGNANDO ID ", newCommerce);
+    try {
+        const response = await fetch('/api/commerce', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newCommerce),
+        });
+
+        // Verificar el estado de la respuesta
+        if (!response.ok) {
+            toast.error("Error al añadir un nuevo Comercio")
+            console.error('Error en la función POST. Código de estado:', response.status);
+            return;  // Salir de la función si hay un error en la respuesta
+        } else {
+            reset()
+            console.log('Comercio añadido con exito');
+            toast.success("Comercio añádido con éxito")
+
+        }
+
+    } catch (error) {
+        console.error('Error en la función POST:', error);
+        toast.error("Error en el servidor")
+    }
+}
+
+
+
 function Form() {
 
     const { handleSubmit, reset, register, formState: { errors } } = useForm();
-
-    async function onSubmit(commerce) {
-        console.log(commerce);
-
-        const newCommerce = {
-            id: uuidv4(),
-            ...commerce,
-        }
-
-        console.log("ASIGNANDO ID ", newCommerce);
-        try {
-            const response = await fetch('/api/commerce', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(newCommerce),
-            });
-
-            // Verificar el estado de la respuesta
-            if (!response.ok) {
-                toast.error("Error al añadir un nuevo Comercio")
-                console.error('Error en la función POST. Código de estado:', response.status);
-                return;  // Salir de la función si hay un error en la respuesta
-            } else {
-                reset()
-                console.log('Comercio añadido con exito');
-                toast.success("Comercio añádido con éxito")
-
-            }
-
-        } catch (error) {
-            console.error('Error en la función POST:', error);
-            toast.error("Error en el servidor")
-        }
-    }
 
     return (
         <div className="flex items-center justify-center flex-col ">
@@ -51,7 +53,7 @@ function Form() {
                 <p className="text-lg text-red-300 mt-2">Completa el formulario para registrar un nuevo comercio.</p>
             </div>
 
-            <form className="w-full max-w-lg rounded mt-8 adminForm" onSubmit={handleSubmit(onSubmit)}>
+            <form className="w-full max-w-lg rounded mt-8 adminForm" onSubmit={handleSubmit((data) => onSubmit(data, reset))}>
 
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">

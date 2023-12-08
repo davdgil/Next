@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 
 const getCommerces = async () => {
     const res = await fetch("http://localhost:3000/api/commerce");
@@ -8,6 +9,53 @@ const getCommerces = async () => {
     console.log(data.commerce);
     return data.commerce;
 };
+
+const deleteComerces = async (commerceID) => {
+    const confirmDelete = window.confirm("¿Estás seguro de querer eliminar este comercio?");
+
+    if (!confirmDelete) {
+        toast("Operacion cancelada")
+        return;
+    } else {
+
+        try {
+            const response = await fetch('/api/commerce', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ commerceID }),
+            });
+
+            if (!response.ok) {
+                toast.error("Error al eliminar el comercio")
+                console.error('Error al eliminar el comercio. Código de estado:', response.status);
+                // Puedes manejar el error de alguna manera, mostrar un mensaje, etc.
+            } else {
+
+                toast.loading("Eliminando...", { duration: 2000 })
+
+                setTimeout(() => {
+
+                    toast.success("Comercio eliminado")
+                }, 2000)
+
+
+                const result = await response.json();
+                console.log(result.message);
+                // Puedes mostrar un mensaje de éxito o realizar alguna acción adicional.
+            }
+        } catch (error) {
+            toast.error("Ha ocurrido un error inesperado")
+            console.error('Error en la función DELETE:', error);
+
+        } finally {
+            setTimeout(() => {
+                window.location.reload();
+            }, 3000)
+        }
+    }
+}
 
 export default function Commerces() {
     const [commerces, setCommerces] = useState([]);
@@ -40,9 +88,9 @@ export default function Commerces() {
                             <p className="text-gray-900 font-bold">CIF: <span className=" text-gray-500  ">{commerce.cif || 'No disponible'}</span></p>
                             <p className="text-gray-900 font-bold">Dirección: <span className=" text-gray-500  ">{commerce.addres || 'No disponible'}</span></p>
                             <div className="mt-4 flex justify-end ">
-                                <button 
+                                <button
                                     className="text-blue-500 hover:text-blue-700 font-medium focus:outline-none relative"
-
+                                    onClick={() => deleteComerces(commerce.id)}
                                 >Eliminar comercio
                                 </button>
                             </div>

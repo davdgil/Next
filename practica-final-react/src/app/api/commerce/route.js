@@ -24,11 +24,28 @@ export async function POST(request) {
 }
 
 export async function GET() {
-  try{
-      const commerce = JSON.parse(readFileSync("data/commerce.txt"))
-      //console.log(users)
-      return NextResponse.json({commerce})
-  } catch(e){  
-      return NextResponse.json({message: "Comercio no existente...", status: 400})
+  try {
+    const commerce = JSON.parse(readFileSync("data/commerce.txt"))
+    //console.log(users)
+    return NextResponse.json({ commerce })
+  } catch (e) {
+    return NextResponse.json({ message: "Comercio no existente...", status: 400 })
   }
+}
+
+
+
+export async function DELETE(request) {
+  const data = await request.json()
+  try {
+    const commerce = JSON.parse(readFileSync("data/commerce.txt"))
+    //console.log(commerce)
+    const commerceFilter = commerce.filter(commerce => commerce.id != data.id)
+    //console.log(commerceFilter)
+    writeFileSync("data/commerce.txt", JSON.stringify(commerceFilter))
+    return NextResponse.json({ message: "Comercio eliminado...", status: 200 })
+  } catch (e) {
+    console.log(e)
+  }
+
 }
