@@ -12,25 +12,26 @@ const getCommerces = async () => {
 
 const deleteComerces = async (commerceID) => {
     const confirmDelete = window.confirm("¿Estás seguro de querer eliminar este comercio?");
-
+    console.log("Borrar:", commerceID)
     if (!confirmDelete) {
         toast("Operacion cancelada")
         return;
     } else {
-
+            toast("HA BORRAR SE HA DICHO")
         try {
+            console.log("antes de borrar")
             const response = await fetch('/api/commerce', {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ commerceID }),
+                body: JSON.stringify(commerceID),
             });
-
+        
             if (!response.ok) {
                 toast.error("Error al eliminar el comercio")
                 console.error('Error al eliminar el comercio. Código de estado:', response.status);
-                // Puedes manejar el error de alguna manera, mostrar un mensaje, etc.
+                return;// Puedes manejar el error de alguna manera, mostrar un mensaje, etc.
             } else {
 
                 toast.loading("Eliminando...", { duration: 2000 })
@@ -64,6 +65,7 @@ export default function Commerces() {
         const fetchCommercesData = async () => {
             const commerceData = await getCommerces();
             setCommerces(commerceData);
+            console.log(commerceData)
         };
 
         fetchCommercesData();

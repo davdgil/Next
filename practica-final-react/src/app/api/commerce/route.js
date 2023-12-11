@@ -33,17 +33,16 @@ export async function GET() {
   }
 }
 
-
-
 export async function DELETE(request) {
   const data = await request.json()
+  
   try {
     const commerce = JSON.parse(readFileSync("data/commerce.txt"))
     //console.log(commerce)
-    const commerceFilter = commerce.filter(commerce => commerce.id != data.id)
+    const commerceFilter = commerce.filter(commerce => commerce.id != data)
     //console.log(commerceFilter)
     writeFileSync("data/commerce.txt", JSON.stringify(commerceFilter))
-    return NextResponse.json({ message: "Comercio eliminado...", status: 200 })
+    return NextResponse.json({ commerceFilter ,message: "Comercio eliminado...", status: 200 })
   } catch (e) {
     console.log(e)
   }

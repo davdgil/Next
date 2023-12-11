@@ -22,7 +22,6 @@ async function onSubmit(commerce, reset) {
             body: JSON.stringify(newCommerce),
         });
 
-        // Verificar el estado de la respuesta
         if (!response.ok) {
             toast.error("Error al añadir un nuevo Comercio")
             console.error('Error en la función POST. Código de estado:', response.status);
@@ -39,7 +38,6 @@ async function onSubmit(commerce, reset) {
         toast.error("Error en el servidor")
     }
 }
-
 
 
 function Form() {
