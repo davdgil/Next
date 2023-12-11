@@ -17,9 +17,7 @@ const deleteComerces = async (commerceID) => {
         toast("Operacion cancelada")
         return;
     } else {
-            toast("HA BORRAR SE HA DICHO")
         try {
-            console.log("antes de borrar")
             const response = await fetch('/api/commerce', {
                 method: 'DELETE',
                 headers: {
@@ -73,7 +71,7 @@ export default function Commerces() {
 
     return (
         <div className="max-w-4xl mx-auto my-8">
-            <h2 className="text-3xl font-bold mb-4">Lista de Comercios</h2>
+            <h2 className="text-3xl text-gray-300 font-bold mb-4">Lista de Comercios</h2>
             <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4  ">
                 {commerces.map((commerce, index) => (
                     <li key={index} className="bg-white rounded-md overflow-hidden shadow-md ">
