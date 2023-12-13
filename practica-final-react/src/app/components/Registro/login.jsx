@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-
+import Cookies from 'js-cookie';
 
 
 const getUser = async (userEmail, userPass, router) => {
@@ -20,7 +20,7 @@ const getUser = async (userEmail, userPass, router) => {
       console.log("Usuario encontrado:");
       const pass = data.users.find((u) => u.password === userPass);
       if (pass) {
-        toast.loading("Redirigiendo a la pagina...",  { duration: 2000 })
+        toast.loading("Redirigiendo a la pagina...", { duration: 2000 })
         const userType = user.userType;
         console.log("Usuario: ", user)
         console.log("Tipo de usuario:", userType);
@@ -33,7 +33,13 @@ const getUser = async (userEmail, userPass, router) => {
             router.push("/admin")
             break;
           case 'merchant':
-            router.push('/merchant')
+            Cookies.set('user', JSON.stringify(user), { path: '/' });
+            if (Cookies.get('user')) {
+              console.log(Cookies.get('user'))
+            } else {
+              console.error('Error al establecer la cookie');
+            }
+            router.push("/merchant");
             break;
           case 'anonimous':
             router.push('/anonimous')

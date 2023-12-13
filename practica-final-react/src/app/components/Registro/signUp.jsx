@@ -61,7 +61,6 @@ const checkExistingUserCommerce = async (user) => {
     const data = await res.json();
 
     const userMerchant = data.commerce.find((u) => u.email === user.email);
-    console.log("knsdajsbdjdjsa", userMerchant.password)
     if (userMerchant) {
       console.log(userMerchant);
       toast.success("Usuario comerciante");
@@ -74,10 +73,6 @@ const checkExistingUserCommerce = async (user) => {
         id: user.id,
         email: user.email,
         password: user.password,
-        idCommerce: userMerchant.id,
-        phone: userMerchant.phone,
-        commerceName: userMerchant.commerceName,
-        addres: userMerchant.addres,
         userType: 'merchant'
       };
       console.log(newUserMerchant);
@@ -115,7 +110,8 @@ function SignUp() {
     <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
       <div className="w-full bg-gray-950 rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-          <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-300 md:text-2xl dark:text-white">
+          <fieldset>
+            <legend><h1 className="text-xl font-bold leading-tight tracking-tight text-gray-300 md:text-2xl dark:text-white">
             Registro de Usuario
             <input
               type="checkbox"
@@ -126,7 +122,9 @@ function SignUp() {
             <label htmlFor="adminMode" className="ml-2 text-gray-300 text-sm font-medium">
               Modo Admin
             </label>
-          </h1>
+          </h1></legend>
+          </fieldset>
+          
           <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <div className="grid grid-cols-1 gap-4">
               <div>
@@ -162,7 +160,7 @@ function SignUp() {
                     className="bg-gray-50 border border-gray-300 text-zinc-950 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required
                   />
-                  {errors.birthdate && <span className="text-red-500 text-sm">sdadadf</span>}
+                  {errors.date && <span className="text-red-500 text-sm">Fecha no válida</span>}
                 
               </div>
   
@@ -208,7 +206,7 @@ function SignUp() {
                   required: 'This field is required',
                   pattern: {
                     value: /^\S+@\S+$/i,
-                    message: 'Enter a valid email address',
+                    message: 'Direccion de correo no válida',
                   },
                 })}
                 id="email"
