@@ -20,16 +20,18 @@ const getUser = async (userEmail, userPass, router) => {
       console.log("Usuario encontrado:");
       const pass = data.users.find((u) => u.password === userPass);
       if (pass) {
-        toast.loading("Redirigiendo a la pagina...", { duration: 2000 })
+        toast.loading("Redirigiendo a la pagina...", { duration: 1000 })
         const userType = user.userType;
         console.log("Usuario: ", user)
         console.log("Tipo de usuario:", userType);
 
         switch (userType) {
           case 'user':
+            Cookies.set('user', JSON.stringify(user), { path: '/' });
             router.push("/user")
             break;
           case 'admin':
+            Cookies.set('user', JSON.stringify(user), { path: '/' });
             router.push("/admin")
             break;
           case 'merchant':
@@ -42,6 +44,7 @@ const getUser = async (userEmail, userPass, router) => {
             router.push("/merchant");
             break;
           case 'anonimous':
+            Cookies.set('user', JSON.stringify(user), { path: '/' });
             router.push('/anonimous')
             break;
         }

@@ -3,11 +3,42 @@ import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import WebPageEditor from "@/app/components/Merchant/webPageEditor";
 import WebPageViewer from "@/app/components/Merchant/webPageViewer";
+import toast from "react-hot-toast";
+
 
 export default function WebPage() {
   const [webPage, setWebPage] = useState({});
+  const [page, setPage] = useState({});
   const [editing, setEditing] = useState(false);
   const [existPage, setExistPage] = useState(false);
+
+  useEffect(() => {
+    const getWebPages = async () => {
+      try {
+        const response = await fetch("/api/webPage");
+        const data = await response.json();
+  
+        const webPageCookie = Cookies.get("webPage");
+        const parsedWebPageData = webPageCookie ? JSON.parse(webPageCookie) : null;
+        if (parsedWebPageData) {
+          setWebPage(parsedWebPageData);
+        }
+  
+        const foundPage = data.webPage.find((u) => u.id === parsedWebPageData.id);
+  
+        if (foundPage) {
+          setExistPage(true);
+          setPage(foundPage);
+        } else {
+          setExistPage(false);
+        }
+      } catch (error) {
+        console.error("Error al obtener datos de la webPage:", error);
+      }
+    };
+  
+    getWebPages();
+  }, []);
 
   const handleEditClick = () => {
     setEditing(true);
@@ -17,23 +48,47 @@ export default function WebPage() {
     setEditing(false);
   };
 
+  const handleSave = async (data) => {
+    setEditing(false); // Oculta el editor después de guardar
+    setExistPage(true);
+
+    try {
+      const response = await fetch("/api/webPage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        toast.error("Error al crear la página web");
+        console.error("Error en la función POST. Código de estado:", response.status);
+        return;
+      }
+
+      console.log("Página web añadida con éxito");
+      toast.success("Página web añadida con éxito");
+    } catch (error) {
+      console.error("Error en la función POST:", error);
+      toast.error("Error en el servidor");
+    }
+  };
+
   const handleDeleteClick = async () => {
     try {
-      // Envía la solicitud de eliminación al servidor
       const response = await fetch("/api/webPage", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id: webPage.id }), // Puedes ajustar según la estructura de tus datos
+        body: JSON.stringify({ id: webPage.id }),
       });
 
       if (response.ok) {
-        // Si la respuesta es exitosa, actualiza el estado para indicar que no hay página web
-        setWebPage({});
-        setExistPage(false); // Asegura que existPage sea false después de borrar
+        console.log("Página web eliminada con éxito");
+        setExistPage(false);
       } else {
-        // Maneja errores si la respuesta no es exitosa
         console.error("Error al eliminar la página web:", response.statusText);
       }
     } catch (error) {
@@ -41,44 +96,21 @@ export default function WebPage() {
     }
   };
 
-  useEffect(() => {
-    const getWebPages = async () => {
-      try {
-        const response = await fetch("/api/webPage"); // Asegúrate de que la ruta sea correcta
-        const data = await response.json();
-
-        // Verifica si hay alguna webPage almacenada en cookies
-        const webPageCookie = Cookies.get("webPage");
-        const parsedWebPageData = webPageCookie ? JSON.parse(webPageCookie) : null;
-
-        if (parsedWebPageData) {
-          setWebPage(parsedWebPageData);
-        }
-
-        const page = data.commerce.find((u) => u.id === webPage.id);
-        setExistPage(!!page); // Convierte a boolean para asignar a existPage
-      } catch (error) {
-        console.error("Error al obtener datos de la webPage:", error);
-      }
-    };
-
-    getWebPages();
-  }, []); // El array vacío asegura que este efecto se ejecute solo una vez, después del montaje inicial
+  const logPageData = () => {
+    console.log("Página web Cookies: ", webPage);
+    console.log("Página del txt: ", page);
+  };
 
   return (
     <div>
+      <button onClick={logPageData}>Pulsame</button>
       {editing ? (
-        <WebPageEditor
-          onSave={handleSave}
-          onCancel={handleCancel}
-          initialData={webPage}
-        />
+        <WebPageEditor onSave={handleSave} onCancel={handleCancel} initialData={webPage} />
       ) : (
         <div>
           {existPage ? (
-            // Verifica si hay una página web existente
             <>
-              <WebPageViewer webPageData={webPage} />
+              <WebPageViewer webPageData={page} />
               <div className="flex gap-4 mt-4">
                 <button
                   className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"

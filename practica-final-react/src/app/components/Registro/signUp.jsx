@@ -1,7 +1,7 @@
 "use client"
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { v4 as uuidv4 } from 'uuid';
 import toast from 'react-hot-toast';
 
@@ -66,13 +66,7 @@ const checkExistingUserCommerce = async (user) => {
       toast.success("Usuario comerciante");
 
       const newUserMerchant = {
-        city: user.city,
-        date: user.date,
-        interests: user.interests,
-        offers: user.offers,
-        id: user.id,
-        email: user.email,
-        password: user.password,
+        ...user,
         userType: 'merchant'
       };
       console.log(newUserMerchant);
