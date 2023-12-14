@@ -18,13 +18,12 @@ export async function PUT(request) {
                 if (page.reviews !== undefined) {
                     page.reviews = [...page.reviews, request.body.reviews];
                 }
-                writeFileSync("data/webPage.txt", JSON.stringify(updatedWebPage));
-        return NextResponse.json({ updatedWebPage, message: "Valores actualizados...", status: 200 });
             }
             return page;
         });
 
-        
+        writeFileSync("data/webPage.txt", JSON.stringify(updatedWebPage));
+        return NextResponse.json({ updatedWebPage, message: "Valores actualizados...", status: 200 });
     } catch (e) {
         console.error(e);
         return NextResponse.json({ message: "Error al actualizar valores...", status: 500 });
