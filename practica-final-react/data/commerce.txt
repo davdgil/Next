@@ -1,1 +1,5 @@
+<<<<<<< Updated upstream
 [{"id":"12f55290-ce7a-438a-b9a1-4791cd98fa22","commerceName":"Lechuga Oyas","email":"comerce@gmail.com","phone":"342434324","cif":"23232322z","addres":"mirador de montepinar n 7"},{"id":"7edb4688-d059-444f-b0e8-e52ed140cfe0","commerceName":"mksdkad","email":"comerce@gmail.com","phone":"342434324","cif":"23232323d","addres":"dsadsads"},{"id":"760290c9-7f90-4b3b-a0bf-b4d49f71fa05","commerceName":"Nicolas tonti","email":"nicolas@gmail.com","phone":"754756475","cif":"54873653z","addres":"tu casa"}]
+=======
+[{"id":"12f55290-ce7a-438a-b9a1-4791cd98fa22","commerceName":"Lechuga Oyas","email":"comerce@gmail.com","phone":"342434324","cif":"23232322z","addres":"mirador de montepinar n 7"},{"id":"7edb4688-d059-444f-b0e8-e52ed140cfe0","commerceName":"mksdkad","email":"comerce@gmail.com","phone":"342434324","cif":"23232323d","addres":"dsadsads"},{"id":"47c727f8-487d-4d8b-a5e5-f52a8c993c61","commerceName":"nciosiksk","email":"yosoy@gmail.com","phone":"463446737","cif":"46372643z","addres":"bdfhjsfgdsgh"}]
+>>>>>>> Stashed changes
