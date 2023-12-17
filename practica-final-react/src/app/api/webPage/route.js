@@ -47,32 +47,4 @@ export async function DELETE(request) {
     console.log(e);
   }
 }
-export async function PUT(request) {
-  const { id } = request.params; // Captura el id de la URL
 
-  const data = await request.json();
-
-  try {
-    let webPage = JSON.parse(readFileSync("data/webPage.txt"));
-    const updatedWebPage = webPage.map((page) => {
-      if (page.id === id) {
-        if (data.likes !== undefined) {
-          page.likes = page.likes + 1;
-        }
-        if (data.dislikes !== undefined) {
-          page.dislikes = page.dislikes + 1;
-        }
-        if (data.reviews !== undefined) {
-          page.reviews = [...page.reviews, data.reviews];
-        }
-      }
-      return page;
-    });
-
-    writeFileSync("data/webPage.txt", JSON.stringify(updatedWebPage));
-    return NextResponse.json({ updatedWebPage, message: "Valores actualizados...", status: 200 });
-  } catch (e) {
-    console.error(e);
-    return NextResponse.json({ message: "Error al actualizar valores...", status: 500 });
-  }
-}

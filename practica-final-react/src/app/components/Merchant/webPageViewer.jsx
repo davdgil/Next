@@ -9,7 +9,8 @@ const WebPageViewer = ({ webPageData }) => {
   const handleLike = async () => {
     if (!liked) {
       try {
-        const requestBody = { likes: webPageData.likes + 1 };
+        const requestBody = { likes: +1 };
+        const requestID = webPageData.id
         console.log('Request Body:', requestBody);
   
         const response = await fetch(`http://localhost:3000/api/webPage/${webPageData.id}`, {
@@ -17,7 +18,7 @@ const WebPageViewer = ({ webPageData }) => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(requestBody),
+          body: JSON.stringify(requestBody, requestID),
         });
   
         if (response.ok) {
@@ -37,32 +38,47 @@ const WebPageViewer = ({ webPageData }) => {
         }
       } catch (error) {
         console.error('Error al realizar la solicitud:', error);
+      }finally{
+        window.location.reload()
       }
     }
   };
   
-  
-
   const handleDislike = async () => {
     if (!disliked) {
       try {
-        // Realiza la solicitud al servidor para actualizar los dislikes utilizando el método PUT
-        const response = await fetch(`http://localhost:3000/api/webPage/${webPageData.id}`, {
+        const requestBody = { dislikes: +1 };
+        const requestID = webPageData.id
+
+        console.log('Request Body:', requestBody);
+  
+        const response = await fetch(`http://localhost:3000/api/dislike/${webPageData.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ action: 'dislike' }), // Puedes enviar la acción (like o dislike) al servidor
+          body: JSON.stringify(requestBody, requestID),
         });
-
+  
         if (response.ok) {
-          setDisliked(true);
-          setLiked(false);
+          // Verificar si la respuesta es un JSON válido antes de intentar analizarla
+          const contentType = response.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+            const result = await response.json();
+            console.log('Response:', result); // Agrega este log para verificar la respuesta del servidor
+            setDisliked(true);
+            setLiked(false);
+            console.log('+1');
+          } else {
+            console.error('La respuesta no es un JSON válido:', response);
+          }
         } else {
           console.error('Error al actualizar los dislikes');
         }
       } catch (error) {
         console.error('Error al realizar la solicitud:', error);
+      }finally{
+        window.location.reload()
       }
     }
   };
