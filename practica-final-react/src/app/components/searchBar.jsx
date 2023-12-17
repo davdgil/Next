@@ -15,7 +15,7 @@ const SearchBar = ({ onSearch }) => {
   return (
     <div>
       <input
-        type="text"
+        type="search"
         placeholder="Buscar comercio..."
         ref={inputRef}
         onChange={handleSearch}

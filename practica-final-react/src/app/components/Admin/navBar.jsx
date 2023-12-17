@@ -4,11 +4,11 @@ import React from 'react';
 
 function AdminBar() {
     return (
-        <nav className="bg-slate-500 border-gray-200 dark:bg-gray-900 mt-1 mb-4">
+        <nav className="bg-slate-500 border-gray-200 dark:bg-gray-900  mb-4">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <Link href={"/"} className="flex items-center space-x-3 rtl:space-x-reverse">
 
-                    <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Flowbite</span>
+                    <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Cerrar sesion</span>
                 </Link>
                 <button
                     data-collapse-toggle="navbar-default"

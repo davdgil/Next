@@ -46,17 +46,15 @@ export default function UserPages() {
         
     }
     
-
-
     return (
         <div className="flex">
             {console.log("Comercios: ", commerces)}
-            <div className="w-3/4 p-3 mr-10">
+            <div className="w-3/4 p-3 ">
                 <UserPage commerce={filtrada} click ={handleClick} />
             </div>
 
-            {/* Sección del Buscador */}
-            <div className="w-1/4 p-3 bg-gradient-to-r from-blue-300 to-blue-500">
+
+            <div className=" mt-10 w-1/4  h-screen p-3 bg-gradient-to-r from-slate-500 to-blue-500">
                 <h2 className="text-xl font-semibold text-white mb-4">Buscar Comercio</h2>
                 <SearchBar onSearch={handleSearch} />
             </div>

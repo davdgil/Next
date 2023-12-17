@@ -103,7 +103,6 @@ export default function WebPage() {
 
   return (
     <div>
-      <button onClick={logPageData}>Pulsame</button>
       {editing ? (
         <WebPageEditor onSave={handleSave} onCancel={handleCancel} initialData={webPage} />
       ) : (
@@ -127,12 +126,14 @@ export default function WebPage() {
               </div>
             </>
           ) : (
+            <div className="flex flex-col items-center justify-center h-40">
             <button
               className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
               onClick={handleEditClick}
             >
               Crear Nueva Página Web
             </button>
+            </div>
           )}
         </div>
       )}

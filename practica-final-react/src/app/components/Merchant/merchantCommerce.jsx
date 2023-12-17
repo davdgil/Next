@@ -8,17 +8,12 @@ function Merch({ user, onClick }) {
     useEffect(() => {
         const fetchCommerces = async () => {
             try {
-                console.log("Usuario logged: ", user);
-
+                console.log("Usuario logged: ", user)
                 const res = await fetch("http://localhost:3000/api/commerce");
-                const data = await res.json();
-
-                // Suponiendo que `user` esté definido en algún lugar antes de este useEffect
+                const data = await res.json();       
                 const userCommerces = data.commerce.filter((u) => u.email === user.email);
 
                 console.log("Comercios encontrados:", userCommerces);
-
-                // Actualiza el estado con la información de los comercios
                 setCommerces(userCommerces);
 
             } catch (error) {
@@ -28,10 +23,10 @@ function Merch({ user, onClick }) {
 
         fetchCommerces();
 
-    }, [user]); // Dependencia actualizada a 'user'
+    }, [user]); 
 
     return (
-        <div className="flex flex-col items-center justify-center h-screen">
+        <div className="flex flex-col items-center justify-center ">
           <h1 className=" text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl mb-10">
             <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400 ">
               Comercios

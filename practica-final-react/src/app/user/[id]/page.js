@@ -6,8 +6,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 
-
-
 export default function Page() {
     const params = useParams();
     const [webPage, setWebPage] = useState([]);
@@ -20,8 +18,6 @@ export default function Page() {
                 const data = await res.json();
                 console.log("pagins web:", data);
 
-                // Verifica si params.id existe y es válido
-
                 const page = data.webPage.find((u) => u.id === params.id);
                 if (page) {
                     console.log("pagina", page);
@@ -32,7 +28,6 @@ export default function Page() {
 
                     router.push('/user')
                 }
-
 
             } catch (error) {
                 console.error("Error al obtener la página web:", error);

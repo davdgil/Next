@@ -106,19 +106,19 @@ function SignUp() {
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
           <fieldset>
             <legend><h1 className="text-xl font-bold leading-tight tracking-tight text-gray-300 md:text-2xl dark:text-white">
-            Registro de Usuario
-            <input
-              type="checkbox"
-              id="adminMode"
-              className="text-black bg-slate-900 hover:bg-red-700 ml-10 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg "
-              {...register('adminMode')}
-            />
-            <label htmlFor="adminMode" className="ml-2 text-gray-300 text-sm font-medium">
-              Modo Admin
-            </label>
-          </h1></legend>
+              Registro de Usuario
+              <input
+                type="checkbox"
+                id="adminMode"
+                className="text-black bg-slate-900 hover:bg-red-700 ml-10 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg "
+                {...register('adminMode')}
+              />
+              <label htmlFor="adminMode" className="ml-2 text-gray-300 text-sm font-medium">
+                Modo Admin
+              </label>
+            </h1></legend>
           </fieldset>
-          
+
           <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <div className="grid grid-cols-1 gap-4">
               <div>
@@ -134,30 +134,37 @@ function SignUp() {
                   <option value="" disabled defaultValue>
                     Selecciona una ciudad
                   </option>
+                  <option value="">Selecciona una ciudad</option>
                   <option value="Madrid">Madrid</option>
+                  <option value="Alcalá de Henares">Alcalá de Henares</option>
                   <option value="Las Rozas">Las Rozas</option>
+                  <option value="Alcobendas">Alcobendas</option>
+                  <option value="Fuenlabrada">Fuenlabrada</option>
+                  <option value="Getafe">Getafe</option>
+                  <option value="Leganes">Leganes</option>
+
                 </select>
                 {errors.city && <span className="text-red-500 text-sm">{errors.city.message}</span>}
               </div>
-  
+
               <div>
                 <label htmlFor="birthdate" className="block mb-2 text-sm font-medium text-gray-300 dark:text-white">Fecha de nacimiento</label>
-                
-                  <input
-                    type="date"
-                    {...register('date', {
-                      required: true, 
-                      min: '1930-01-01', // Set the minimum allowed range
-                      max: '2015-12-31', // Set the maximum allowed range
-                    })}
-                    id="birthdate"
-                    className="bg-gray-50 border border-gray-300 text-zinc-950 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    required
-                  />
-                  {errors.date && <span className="text-red-500 text-sm">Fecha no válida</span>}
-                
+
+                <input
+                  type="date"
+                  {...register('date', {
+                    required: true,
+                    min: '1930-01-01',
+                    max: '2015-12-31',
+                  })}
+                  id="birthdate"
+                  className="bg-gray-50 border border-gray-300 text-zinc-950 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  required
+                />
+                {errors.date && <span className="text-red-500 text-sm">Fecha no válida</span>}
+
               </div>
-  
+
               <div>
                 <label htmlFor="interests" className="block mb-2 text-sm font-medium text-gray-300 dark:text-white">Interests</label>
                 <select
@@ -176,7 +183,7 @@ function SignUp() {
                 </select>
                 {errors.interests && <span className="text-red-500 text-sm">{errors.interests.message}</span>}
               </div>
-  
+
               <div>
                 <label htmlFor="offers" className="flex items-center text-sm font-medium text-gray-300 dark:text-white">
                   <input
@@ -189,9 +196,9 @@ function SignUp() {
                 </label>
               </div>
             </div>
-  
+
             <hr className="my-6 border-1 border-gray-500" />
-  
+
             <div>
               <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-300 dark:text-white">E-mail</label>
               <input
@@ -210,7 +217,7 @@ function SignUp() {
               />
               {errors.email && <span className="text-red-500 text-sm">{errors.email.message}</span>}
             </div>
-  
+
             <div>
               <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-300 dark:text-white">Contraseña</label>
               <input
@@ -229,14 +236,14 @@ function SignUp() {
               />
               {errors.password && <span className="text-red-500 text-sm">{errors.password.message}</span>}
             </div>
-  
+
             <button
               type="submit"
               className="w-full text-black bg-red-600  hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
             >
               Registrarse
             </button>
-  
+
             <p className="text-sm font-light text-gray-300 dark:text-gray-300">
               ¿Ya tienes una cuenta? <Link href="/" className="font-medium text-white hover:underline dark:text-primary-500">Iniciar sesión</Link>
             </p>
@@ -245,7 +252,7 @@ function SignUp() {
       </div>
     </div>
   );
-  
+
 
 
 

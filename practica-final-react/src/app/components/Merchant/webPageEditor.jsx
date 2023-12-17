@@ -78,7 +78,7 @@ const WebPageEditor = ({ onSave, onCancel, initialData }) => {
             <option value="Fuenlabrada">Fuenlabrada</option>
             <option value="Getafe">Getafe</option>
             <option value="Leganes">Leganes</option>
-            {/* Agrega más opciones según sea necesario */}
+            
           </select>
         </label>
         <label className="block mb-2">

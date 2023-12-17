@@ -8,29 +8,39 @@ const WebPageViewer = ({ webPageData }) => {
 
   const handleLike = async () => {
     if (!liked) {
-        try {
-            const requestBody = { likes: webPageData.likes + 1 };
-            console.log('Request Body:', requestBody); // Agrega este log para verificar el cuerpo de la solicitud
-            const response = await fetch(`http://localhost:3000/api/webPage/${webPageData.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(requestBody),
-            });
-
-            if (response.ok) {
-                setLiked(true);
-                setDisliked(false);
-                console.log('+1');
-            } else {
-                console.error('Error al actualizar los likes');
-            }
-        } catch (error) {
-            console.error('Error al realizar la solicitud:', error);
+      try {
+        const requestBody = { likes: webPageData.likes + 1 };
+        console.log('Request Body:', requestBody);
+  
+        const response = await fetch(`http://localhost:3000/api/webPage/${webPageData.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+        });
+  
+        if (response.ok) {
+          // Verificar si la respuesta es un JSON válido antes de intentar analizarla
+          const contentType = response.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+            const result = await response.json();
+            console.log('Response:', result); // Agrega este log para verificar la respuesta del servidor
+            setLiked(true);
+            setDisliked(false);
+            console.log('+1');
+          } else {
+            console.error('La respuesta no es un JSON válido:', response);
+          }
+        } else {
+          console.error('Error al actualizar los likes');
         }
+      } catch (error) {
+        console.error('Error al realizar la solicitud:', error);
+      }
     }
-};
+  };
+  
   
 
   const handleDislike = async () => {
