@@ -72,6 +72,8 @@ export default function WebPage() {
     } catch (error) {
       console.error("Error en la función POST:", error);
       toast.error("Error en el servidor");
+    }finally{
+      window.location.reload()
     }
   };
 

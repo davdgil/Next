@@ -43,10 +43,6 @@ const getUser = async (userEmail, userPass, router) => {
             }
             router.push("/merchant");
             break;
-          case 'anonimous':
-            Cookies.set('user', JSON.stringify(user), { path: '/' });
-            router.push('/anonimous')
-            break;
         }
       } else {
         toast.error("Contraseña incorrecta")
@@ -59,11 +55,12 @@ const getUser = async (userEmail, userPass, router) => {
       return null;
     }
   } catch (error) {
-
-    console.error("Error al obtener usuarios:");
+   
     return null;
   }
 };
+
+
 
 
 function Login() {
@@ -76,6 +73,15 @@ function Login() {
     getUser(data.email, data.password, router)
   }
 
+  const privateMode = () => {
+    const userTemp ={
+      userType: 'incognito'
+    }
+    Cookies.set('user', JSON.stringify(userTemp), { path: '/' });
+    console.error("Error al obtener usuarios:");
+    router.push("/user")
+  }
+
   return (
 
     <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -86,7 +92,7 @@ function Login() {
           </h1>
           <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <div>
-              <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-300 dark:text-white">Your email</label>
+              <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-300 dark:text-white">E-mail</label>
               <input
                 type="email"
                 {...register('email', {
@@ -104,7 +110,7 @@ function Login() {
               {errors.email && <span className="text-red-500 text-sm">{errors.email.message}</span>}
             </div>
             <div>
-              <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-300 dark:text-white">Password</label>
+              <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-300 dark:text-white">Contraseña</label>
               <input
                 type="password"
                 {...register('password', {
@@ -133,21 +139,27 @@ function Login() {
                   />
                 </div>
                 <div className="ml-3 text-sm">
-                  <label htmlFor="remember" className="text-gray-300 dark:text-gray-300">Remember me</label>
+                  <label htmlFor="remember" className="text-gray-300 dark:text-gray-300">Recordarme</label>
                 </div>
               </div>
-              <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot password?</a>
+              <a href="#" className="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Olvidaste la contraseña?</a>
             </div>
             <button
               type="submit"
               className="w-full text-black bg-lime-400 hover:bg-lime-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
             >
-              Sign in
+              Iniciar Sesion
             </button>
             <p className="text-sm font-light text-gray-300 dark:text-gray-300">
               No tienes cuenta? <Link href="/register" className="font-medium text-white hover:underline dark:text-primary-500">Registrate</Link>
             </p>
           </form>
+          <button
+              onClick={privateMode}
+              className="w-full text-yellow-50 bg-violet-400 hover:bg-blue-950 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+            >
+              Modo Incógnito
+            </button>
         </div>
       </div>
     </div>

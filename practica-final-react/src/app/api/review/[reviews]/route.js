@@ -5,14 +5,14 @@ export async function PUT(request, id) {
     const data = await request.json();
     console.log(data, "data");
 
-    const idValue = id.params.dislikes;
+    const idValue = id.params.reviews;
     console.log(idValue);
 
     try {
         let webPage = JSON.parse(readFileSync("data/webPage.txt"));
         const updatedWebPage = webPage.map((page) => {
             if (page.id === idValue) {
-                page.dislikes = page.dislikes + 1;
+                page.reviews.push(data.reviews);
             }
             return page;
         });

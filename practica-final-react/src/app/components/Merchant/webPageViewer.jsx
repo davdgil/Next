@@ -1,16 +1,21 @@
 // WebPageViewer.jsx
 import React, { useState } from "react";
+import Cookies from "js-cookie";
 
 const WebPageViewer = ({ webPageData }) => {
   const { commerceName, title, description, city, photos, addres, likes, dislikes, reviews } = webPageData;
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
 
+  const userCookie = Cookies.get('user');
+  const parsedUserData = userCookie ? JSON.parse(userCookie) : null;
+  console.log('Usuario loged',parsedUserData)
+
   const handleLike = async () => {
-    if (!liked) {
+    if (!liked && parsedUserData.userType === 'user') {
       try {
         const requestBody = { likes: +1 };
-        const requestID = webPageData.id
+        //const requestID = webPageData.id
         console.log('Request Body:', requestBody);
   
         const response = await fetch(`http://localhost:3000/api/webPage/${webPageData.id}`, {
@@ -18,7 +23,7 @@ const WebPageViewer = ({ webPageData }) => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(requestBody, requestID),
+          body: JSON.stringify(requestBody),
         });
   
         if (response.ok) {
@@ -41,14 +46,16 @@ const WebPageViewer = ({ webPageData }) => {
       }finally{
         window.location.reload()
       }
+    }else{
+      alert("Inicia sesion para poder participar")
     }
   };
   
   const handleDislike = async () => {
-    if (!disliked) {
+    if (!disliked && parsedUserData.userType === 'user') {
       try {
         const requestBody = { dislikes: +1 };
-        const requestID = webPageData.id
+        //const requestID = webPageData.id
 
         console.log('Request Body:', requestBody);
   
@@ -57,7 +64,7 @@ const WebPageViewer = ({ webPageData }) => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(requestBody, requestID),
+          body: JSON.stringify(requestBody),
         });
   
         if (response.ok) {
@@ -80,8 +87,51 @@ const WebPageViewer = ({ webPageData }) => {
       }finally{
         window.location.reload()
       }
+    }else{
+      alert("Inicia sesion para poder participar")
     }
   };
+
+  const handleReview = async () => {
+    if (parsedUserData.userType === 'user') {
+        const prompText = window.prompt('Introduzca su reseña: ');
+
+        try {
+            const requestBody = { reviews: prompText };
+            const requestID = webPageData.id;
+
+            console.log('Request Body:', requestBody);
+
+            const response = await fetch(`http://localhost:3000/api/review/${webPageData.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestBody), // Solo pasamos el cuerpo aquí
+            });
+
+            if (response.ok) {
+                // Verificar si la respuesta es un JSON válido antes de intentar analizarla
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.includes('application/json')) {
+                    const result = await response.json();
+                    console.log('Response:', result); // Agrega este log para verificar la respuesta del servidor
+                    // Aquí puedes realizar acciones adicionales según sea necesario
+                } else {
+                    console.error('La respuesta no es un JSON válido:', response);
+                }
+            } else {
+                console.error('Error al actualizar las reseñas');
+            }
+        } catch (error) {
+            console.error('Error al realizar la solicitud:', error);
+        } finally {
+            window.location.reload()
+        }
+    } else {
+        alert("Inicia sesión para poder participar");
+    }
+};
 
   return (
     <div className="bg-gray-900 text-white p-8 rounded-lg shadow-lg">
@@ -155,17 +205,26 @@ const WebPageViewer = ({ webPageData }) => {
           </div>
         </div>
       </div>
+      <div className="flex items-center justify-center ">
 
+      <button
+        onClick={handleReview}
+        className="bg-blue-500 text-white font-bold py-2 px-4 rounded-full flex-col flex items-center w-2/3 mt-8 "
+      >
+        <span className="text-2xl">+</span>
+      </button>
+    </div>
       <div className="bg-gray-800 p-8 rounded-lg shadow-lg mt-8">
         <h3 className="text-3xl font-semibold mb-4">Reseñas</h3>
         {reviews && reviews.length > 0 ? (
-          <ul className="text-left mb-4">
-            {reviews.map((review, index) => (
-              <li key={index} className="mb-2">
-                {review}
-              </li>
-            ))}
-          </ul>
+          <div className="text-left mb-4">
+          {reviews.map((review, index) => (
+            <div key={index} className="mb-5 border border-white rounded-full p-2 flex items-center justify-center ">
+              {review}
+            </div>
+          ))}
+        </div>
+        
         ) : (
           <p className="text-gray-300">Aún no se han creado reseñas.</p>
         )}
