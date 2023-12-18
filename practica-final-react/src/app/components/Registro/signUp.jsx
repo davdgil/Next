@@ -73,7 +73,8 @@ const checkExistingUserCommerce = async (user) => {
       saveUser(newUserMerchant);
 
     } else {
-      toast.error("USUARIO YA REGISTRADO");
+      saveUser(user)
+      
     }
   } catch (error) {
     saveUser(user)
@@ -84,10 +85,10 @@ const checkExistingUserCommerce = async (user) => {
 function SignUp() {
   const router = useRouter();
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  const modoAdmin = watch('modoAdmin', false);
+  const modoAdmin = watch('adminMode', false);
 
   const onSubmit = (data) => {
-    const userType = modoAdmin ? 'admin' : 'user';
+    const userType = adminMode ? 'admin' : 'user';
     console.log(data)
 
     const newUser = {

@@ -101,7 +101,7 @@ export default function Commerces() {
                     ))}
                 </ul>
             ) : (
-                <p>No hay comercios disponibles</p>
+                <p className='text-white'>No hay comercios disponibles</p>
             )}
         </div>
     );
