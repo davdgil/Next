@@ -23,3 +23,18 @@ export async function POST(request) {
     }
     return NextResponse.json({message: "Guardando datos..."})
 }
+
+export async function DELETE(request) {
+    const data = await request.json()
+    
+    try {
+      const users = JSON.parse(readFileSync("data/users.txt"))
+      //console.log(commerce)
+      const userFilter = users.filter(user => user.id != data)
+      //console.log(commerceFilter)
+      writeFileSync("data/users.txt", JSON.stringify(userFilter))
+      return NextResponse.json({ userFilter ,message: "Usuario eliminado...", status: 200 })
+    } catch (e) {
+      console.log(e)
+    }
+}

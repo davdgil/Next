@@ -25,22 +25,29 @@ export default function UserListShow() {
 
         fetchUsersData();
     }, []);
-    
+
 
     const handleSearch = (text) => {
         setFilterText(text)
     }
 
     const filtrada = users.filter((filtered) =>
-        filtered.email.toLowerCase().includes(filterText.toLowerCase())
+        filtered.email.toLowerCase().includes(filterText.toLowerCase()) || 
+        filtered.id.toLowerCase().includes(filterText.toLowerCase()) ||
+        filtered.userType.toLowerCase().includes(filterText.toLowerCase())
 
     );
 
     return (
-        <div>
+        <div className="flex">
             {console.log(" filtrada : ", filtrada)}
-            <UserList userFilter ={filtrada}/>
-            <SearchBar onSearch={handleSearch}/>
+            <div className="w-3/4 p-3 ">
+                <UserList userFilter={filtrada} />
+            </div>
+            <div className=" mt-10 w-1/4  h-screen p-3 bg-gradient-to-r from-slate-500 to-blue-500">
+                <h2 className="text-xl font-semibold text-white mb-4">Buscar Usuario</h2>
+                <SearchBar onSearch={handleSearch} />
+            </div>
         </div>
     )
 

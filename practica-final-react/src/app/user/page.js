@@ -35,7 +35,9 @@ export default function UserPages() {
     };
 
     const filtrada = commerces.filter((filtered) =>
-        filtered.commerceName.toLowerCase().startsWith(searchText.toLowerCase())
+        filtered.commerceName.toLowerCase().startsWith(searchText.toLowerCase()) ||
+        filtered.phone.toLowerCase().startsWith(searchText.toLowerCase()) ||
+        filtered.addres.toLowerCase().startsWith(searchText.toLowerCase())
 
     );
 

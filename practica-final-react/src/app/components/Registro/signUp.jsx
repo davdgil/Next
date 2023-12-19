@@ -85,7 +85,7 @@ const checkExistingUserCommerce = async (user) => {
 function SignUp() {
   const router = useRouter();
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  const modoAdmin = watch('adminMode', false);
+  const adminMode = watch('adminMode', false);
 
   const onSubmit = (data) => {
     const userType = adminMode ? 'admin' : 'user';

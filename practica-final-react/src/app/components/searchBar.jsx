@@ -16,7 +16,7 @@ const SearchBar = ({ onSearch }) => {
     <div>
       <input
         type="search"
-        placeholder="Buscar comercio..."
+        placeholder="Buscar..."
         ref={inputRef}
         onChange={handleSearch}
         className="text-black" 

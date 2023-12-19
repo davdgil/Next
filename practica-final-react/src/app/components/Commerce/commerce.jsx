@@ -1,73 +1,7 @@
 "use client";
 
-import { useEffect, useState } from 'react';
-import toast from 'react-hot-toast';
-
-const getCommerces = async () => {
-    const res = await fetch("http://localhost:3000/api/commerce");
-    const data = await res.json();
-    console.log(data.commerce);
-    return data.commerce;
-};
-
-const deleteComerces = async (commerceID) => {
-    const confirmDelete = window.confirm("¿Estás seguro de querer eliminar este comercio?");
-    console.log("Borrar:", commerceID)
-    if (!confirmDelete) {
-        toast("Operacion cancelada")
-        return;
-    } else {
-        try {
-            const response = await fetch('/api/commerce', {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(commerceID),
-            });
-
-            if (!response.ok) {
-                toast.error("Error al eliminar el comercio")
-                console.error('Error al eliminar el comercio. Código de estado:', response.status);
-                return;// Puedes manejar el error de alguna manera, mostrar un mensaje, etc.
-            } else {
-
-                toast.loading("Eliminando...", { duration: 2000 })
-
-                setTimeout(() => {
-
-                    toast.success("Comercio eliminado")
-                }, 2000)
-
-
-                const result = await response.json();
-                console.log(result.message);
-                // Puedes mostrar un mensaje de éxito o realizar alguna acción adicional.
-            }
-        } catch (error) {
-            toast.error("Ha ocurrido un error inesperado")
-            console.error('Error en la función DELETE:', error);
-
-        } finally {
-            setTimeout(() => {
-                window.location.reload();
-            }, 3000)
-        }
-    }
-}
-
-export default function Commerces() {
-    const [commerces, setCommerces] = useState([]);
-
-    useEffect(() => {
-        const fetchCommercesData = async () => {
-            const commerceData = await getCommerces();
-            setCommerces(commerceData);
-            console.log(commerceData)
-        };
-
-        fetchCommercesData();
-    }, []); // El array vacío asegura que el efecto solo se ejecute una vez al montar el componente.
+export default function Commerces( {commerces} ) {
+    // El array vacío asegura que el efecto solo se ejecute una vez al montar el componente.
 
     return (
         <div className="max-w-4xl mx-auto my-8">
