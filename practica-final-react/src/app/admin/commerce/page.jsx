@@ -13,51 +13,6 @@ const getCommerces = async () => {
     return data.commerce;
 };
 
-const deleteComerces = async (commerceID) => {
-    const confirmDelete = window.confirm("¿Estás seguro de querer eliminar este comercio?");
-    console.log("Borrar:", commerceID)
-    if (!confirmDelete) {
-        toast("Operacion cancelada")
-        return;
-    } else {
-        try {
-            const response = await fetch('/api/commerce', {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(commerceID),
-            });
-
-            if (!response.ok) {
-                toast.error("Error al eliminar el comercio")
-                console.error('Error al eliminar el comercio. Código de estado:', response.status);
-                return;// Puedes manejar el error de alguna manera, mostrar un mensaje, etc.
-            } else {
-
-                toast.loading("Eliminando...", { duration: 2000 })
-
-                setTimeout(() => {
-
-                    toast.success("Comercio eliminado")
-                }, 2000)
-
-
-                const result = await response.json();
-                console.log(result.message);
-                // Puedes mostrar un mensaje de éxito o realizar alguna acción adicional.
-            }
-        } catch (error) {
-            toast.error("Ha ocurrido un error inesperado")
-            console.error('Error en la función DELETE:', error);
-
-        } finally {
-            setTimeout(() => {
-                window.location.reload();
-            }, 3000)
-        }
-    }
-}
 
 export default function Commerce() {
 
