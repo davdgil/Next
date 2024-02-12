@@ -8,19 +8,28 @@ const servidor = http.createServer((req, res) => {
     switch(req){
         case 'GET': 
             return manejarSolicitudesGET(req, res);
-        case 'POST':
-            return 0;
+
+
+        default:
+            res.statusCode = 501;
+            res.setHeader('Content-Type', 'text/plain')
+            res.end('Metodo no implementado');
     }
+   
 });
 
 function manejarSolicitudesGET(req, res){
     const path = req.url;
 
     if (path === '/'){
-        return res.end("Error 404")
+        res.statusCode = 200;
+        es.setHeader('Content-Type', 'text/plain')
+        res.end('Bienvenido al servidor de cursos')
     }else if(path === '/cursos'){
-        
+        res.statusCode = 200;
+        es.setHeader('Content-Type', 'application/json')
         return res.end(JSON.stringify(cursos.infoCursos))
+
     }else if(path === '/cursos/programacion'){
         
         return res.end(JSON.stringify(cursos.infoCursos.programacion))
